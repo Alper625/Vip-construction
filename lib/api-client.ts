@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://localhost:50371/api"
+const API_BASE_URL = "https://localhost:55659/api"
 
 class ApiClient {
   private baseURL: string
@@ -10,15 +10,18 @@ class ApiClient {
   private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
     const url = `${this.baseURL}${endpoint}`
 
-    const config: RequestInit = {
+  const config: RequestInit = {
       ...options,
       headers: {
-        "Content-Type": "application/json",
-        ...options.headers,
+          "Content-Type": "application/json",
+          ...options.headers,
       },
-    }
+  }
 
     try {
+      
+      process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"
+
       const response = await fetch(url, config)
 
       if (!response.ok) {
@@ -27,10 +30,10 @@ class ApiClient {
 
       return await response.json()
     } catch (error) {
-      console.error(`API request failed for ${endpoint}:`, error)
+      console.error(`API request failed for ${endpoint}:`, url)
       throw error
     }
-  }
+  } 
 
   async getCategories() {
     return this.request("/categories")

@@ -1,18 +1,18 @@
 export interface Category {
   id: number
   name: string
-  description: string | null
+  description?: string
   category_template_id: number
-  meta_keywords: string | null
-  meta_description: string | null
-  meta_title: string | null
+  meta_keywords?: string
+  meta_description?: string
+  meta_title?: string
   parent_category_id: number
   page_size: number
   page_size_options: string
-  price_ranges: string | null
-  show_on_home_page: boolean | null
+  price_ranges?: string
+  show_on_home_page?: boolean
   include_in_top_menu: boolean
-  has_discounts_applied: boolean | null
+  has_discounts_applied?: boolean
   published: boolean
   deleted: boolean
   display_order: number
@@ -21,7 +21,7 @@ export interface Category {
   role_ids: number[]
   discount_ids: number[]
   store_ids: number[]
-  image: string | null
+  image?: string
   se_name: string
 }
 

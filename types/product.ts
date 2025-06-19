@@ -1,29 +1,29 @@
 export interface Product {
   id: number
-  visible_individually: boolean
+  visible_individually?: boolean
   name: string
   short_description: string
-  full_description: string | null
-  show_on_home_page: boolean
-  meta_keywords: string | null
-  meta_description: string | null
-  meta_title: string | null
-  allow_customer_reviews: boolean
-  approved_rating_sum: number
-  not_approved_rating_sum: number
-  approved_total_reviews: number
-  not_approved_total_reviews: number
+  full_description?: string
+  show_on_home_page?: boolean
+  meta_keywords?: string
+  meta_description?: string
+  meta_title?: string
+  allow_customer_reviews?: boolean
+  approved_rating_sum?: number
+  not_approved_rating_sum?: number
+  approved_total_reviews?: number
+  not_approved_total_reviews?: number
   sku: string
-  manufacturer_part_number: string | null
-  gtin: string | null
-  is_gift_card: boolean
+  manufacturer_part_number?: string
+  gtin?: string
+  is_gift_card?: boolean
   require_other_products: boolean
   automatically_add_required_products: boolean
   required_product_ids: number[]
   is_download: boolean
   unlimited_downloads: boolean
   max_number_of_downloads: number
-  download_expiration_days: number | null
+  download_expiration_days?: number
   has_sample_download: boolean
   has_user_agreement: boolean
   is_recurring: boolean
@@ -32,15 +32,15 @@ export interface Product {
   is_rental: boolean
   rental_price_length: number
   is_ship_enabled: boolean
-  is_free_shipping: boolean
+  is_free_shipping?: boolean
   ship_separately: boolean
   additional_shipping_charge: number
   is_tax_exempt: boolean
   tax_category_id: number
-  is_telecommunications_or_broadcasting_or_electronic_services: boolean | null
+  is_telecommunications_or_broadcasting_or_electronic_services?: boolean
   use_multiple_warehouses: boolean
   manage_inventory_method_id: number
-  stock_quantity: number
+  stock_quantity?: number
   display_stock_availability: boolean
   display_stock_quantity: boolean
   min_stock_quantity: number
@@ -49,19 +49,19 @@ export interface Product {
   allow_back_in_stock_subscriptions: boolean
   order_minimum_quantity: number
   order_maximum_quantity: number
-  allowed_quantities: string | null
+  allowed_quantities?: string
   allow_adding_only_existing_attribute_combinations: boolean
   disable_buy_button: boolean
   disable_wishlist_button: boolean
   available_for_pre_order: boolean
-  pre_order_availability_start_date_time_utc: string | null
+  pre_order_availability_start_date_time_utc?: string
   call_for_price: boolean
   price: number
   old_price: number
   product_cost: number
-  special_price: number | null
-  special_price_start_date_time_utc: string | null
-  special_price_end_date_time_utc: string | null
+  special_price?: number
+  special_price_start_date_time_utc?: string
+  special_price_end_date_time_utc?: string
   customer_enters_price: boolean
   minimum_customer_entered_price: number
   maximum_customer_entered_price: number
@@ -69,16 +69,16 @@ export interface Product {
   baseprice_amount: number
   baseprice_base_amount: number
   mark_as_new: boolean
-  mark_as_new_start_date_time_utc: string | null
-  mark_as_new_end_date_time_utc: string | null
-  has_tier_prices: boolean | null
-  has_discounts_applied: boolean | null
+  mark_as_new_start_date_time_utc?: string
+  mark_as_new_end_date_time_utc?: string
+  has_tier_prices?: boolean
+  has_discounts_applied?: boolean
   weight: number
   length: number
   width: number
   height: number
-  available_start_date_time_utc: string | null
-  available_end_date_time_utc: string | null
+  available_start_date_time_utc?: string
+  available_end_date_time_utc?: string
   display_order: number
   published: boolean
   deleted: boolean
@@ -102,4 +102,4 @@ export interface Product {
 
 export interface ProductsResponse {
   products: Product[]
-}   
+}

@@ -3,7 +3,7 @@ import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
 import { ArrowRight } from "lucide-react"
 import { apiClient } from "@/lib/api-client"
-import { Category, CategoriesResponse } from "@/types/category"
+import { Category, CategoriesResponse } from "@/types/Category"
 
 async function getCategories(): Promise<Category[]> {
   try {

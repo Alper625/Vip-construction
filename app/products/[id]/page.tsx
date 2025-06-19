@@ -4,8 +4,7 @@ import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import { AddToCartButton } from "../../components/add-to-cart-button"
 import { apiClient } from "@/lib/api-client"
-import{Product, ProductsResponse} from "@/types/product"
-
+import{Product, ProductsResponse} from "@/types/Product"
 
 async function getProduct(id: string): Promise<Product[] | null> {
   try {

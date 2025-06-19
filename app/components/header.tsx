@@ -44,6 +44,9 @@ export function Header() {
             <Link href="/categories" className="text-slate-700 hover:text-orange-500 font-medium">
               Categories
             </Link>
+            <Link href="/aboutus" className="text-slate-700 hover:text-orange-500 font-medium">
+              About us
+            </Link>
           </nav>
 
           {/* Search Bar */}

@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Search, Filter } from "lucide-react"
 import { apiClient } from "@/lib/api-client"
-import {Product, ProductsResponse} from "@/types/product"
+import {Product, ProductsResponse} from "@/types/Product"
 
 function CatalogContent() {
   const searchParams = useSearchParams()
