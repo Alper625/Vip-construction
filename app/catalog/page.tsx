@@ -37,20 +37,27 @@ function CatalogContent() {
     try {
       const params: any = {}
 
-       if (searchParams.get("search")) params.search = searchParams.get("search")!
+      if (searchParams.get("search")) params.search = searchParams.get("search")!
       // if (searchParams.get("category")) params.category = searchParams.get("category")!
       // if (filters.minPrice) params.minPrice = filters.minPrice
       // if (filters.maxPrice) params.maxPrice = filters.maxPrice
-      // if (filters.brands.length > 0) params.brand = filters.brands[0] // API might not support multiple brands
-      // if (filters.categories.length > 0) params.category = filters.categories[0] // API might not support multiple categories
+      // if (filters.brands.length > 0) params.brand = filters.brands[0] 
+      // if (filters.categories.length > 0) params.category = filters.categories[0]
 
       const data = await apiClient.getProducts() as ProductsResponse
-
-     setProducts(Array.isArray(data.products) ? data.products : [])
+      
+      if (!data || !data.products) {
+        throw new Error("Invalid response format");
+      }
+      
+      setProducts(Array.isArray(data.products) ? data.products : [])
     } catch (error) {
       console.error("Failed to fetch products:", error)
-      setError("Failed to load products. Please try again.")
-      setProducts([])
+      // Update both states in a single batch
+      setProducts([]) // Clear products first
+      setTimeout(() => {
+        setError("Failed to load products. Please try again.")
+      }, 0)
     } finally {
       setLoading(false)
     }

@@ -9,36 +9,13 @@ import {Product, ProductsResponse} from "@/types/Product"
 
 async function getFeaturedProducts() {
   try {
-    const products = await apiClient.getProducts() as  ProductsResponse
+    const products = await apiClient.getProducts() as ProductsResponse
 
     return Array.isArray(products?.products) ? products.products.slice(0, 4) : []
   } catch (error) {
     console.error("Failed to fetch featured products:", error)
-    // Fallback to mock data
-    return [
-      {
-        id: "1",
-        name: "DeWalt 20V MAX Cordless Drill",
-        price: 129.99,
-        image: "/placeholder.svg?height=300&width=300",
-        description: "High-performance cordless drill with 20V MAX battery",
-        category: "power-tools",
-        brand: "DeWalt",
-        stock: 15,
-        featured: true,
-      },
-      {
-        id: "2",
-        name: "Milwaukee M18 Circular Saw",
-        price: 199.99,
-        image: "/placeholder.svg?height=300&width=300",
-        description: '7-1/4" circular saw with brushless motor',
-        category: "power-tools",
-        brand: "Milwaukee",
-        stock: 8,
-        featured: true,
-      },
-    ]
+    // Return empty array instead of mock data to indicate failure
+    return null
   }
 }
 
@@ -133,11 +110,11 @@ export default async function HomePage() {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-slate-800 mb-4">Препоръчани продукти</h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
-             Открий най-популярните ни инструменти и оборудване
+              Открий най-популярните ни инструменти и оборудване
             </p>
           </div>
 
-          {featuredProducts.length > 0 ? (
+          {featuredProducts ? (
             <>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
                 {featuredProducts.map((product: any) => (
@@ -156,7 +133,7 @@ export default async function HomePage() {
             </>
           ) : (
             <div className="text-center py-12">
-              <p className="text-slate-600">Loading featured products...</p>
+              <p className="text-slate-600">Unable to load featured products at this time.</p>
             </div>
           )}
         </div>
