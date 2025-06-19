@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://localhost:55659/api"
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
 class ApiClient {
   private baseURL: string
@@ -72,4 +72,4 @@ class ApiClient {
   }
 }
 
-export const apiClient = new ApiClient(API_BASE_URL)
+export const apiClient = new ApiClient(API_BASE_URL!)
