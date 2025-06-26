@@ -53,12 +53,19 @@ function CatalogContent() {
       //   }
     
       const products = await getProducts();
-      console.log("Fetched products:", products)
+
+      if (!products) {
+        throw new Error("Invalid response format");
+      }
+
      setProducts(Array.isArray(products) ? products : [])
     } catch (error) {
       console.error("Failed to fetch products:", error)
-      setError("Failed to load products. Please try again.")
-      setProducts([])
+      // Update both states in a single batch
+      setProducts([]) // Clear products first
+      setTimeout(() => {
+        setError("Failed to load products. Please try again.")
+      }, 0)
     } finally {
       setLoading(false)
     }

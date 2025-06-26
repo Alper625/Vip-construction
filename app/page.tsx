@@ -70,11 +70,11 @@ export default async function HomePage() {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-slate-800 mb-4">Препоръчани продукти</h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
-             Открий най-популярните ни инструменти и оборудване
+              Открий най-популярните ни инструменти и оборудване
             </p>
           </div>
 
-          {featuredProducts.length > 0 ? (
+          {featuredProducts ? (
             <>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
                 {featuredProducts.map((product: any) => (
@@ -93,7 +93,7 @@ export default async function HomePage() {
             </>
           ) : (
             <div className="text-center py-12">
-              <p className="text-slate-600">Loading featured products...</p>
+              <p className="text-slate-600">Unable to load featured products at this time.</p>
             </div>
           )}
         </div>
