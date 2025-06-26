@@ -30,22 +30,19 @@ export function Header() {
             <div className="w-10 h-10 construction-gradient rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-xl">PB</span>
             </div>
-            <span className="text-2xl font-bold text-slate-800">ProBuild Supply</span>
+            <span className="text-2xl font-bold text-slate-800">ProBuild </span>
           </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             <Link href="/" className="text-slate-700 hover:text-orange-500 font-medium">
-              Home
+              Начало
             </Link>
             <Link href="/catalog" className="text-slate-700 hover:text-orange-500 font-medium">
-              Products
-            </Link>
-            <Link href="/categories" className="text-slate-700 hover:text-orange-500 font-medium">
-              Categories
+              Продукти
             </Link>
             <Link href="/aboutus" className="text-slate-700 hover:text-orange-500 font-medium">
-              About us
+              За нас
             </Link>
           </nav>
 
@@ -54,7 +51,7 @@ export function Header() {
             <div className="relative w-full">
               <Input
                 type="text"
-                placeholder="Search tools and equipment..."
+                placeholder="Търси инструменти и оборудване..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pr-10"

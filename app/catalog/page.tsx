@@ -9,8 +9,8 @@ import { ProductFilters } from "../components/product-filters"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Search, Filter } from "lucide-react"
-import { apiClient } from "@/lib/api-client"
 import {Product, ProductsResponse} from "@/types/Product"
+import {getProducts} from "@/services/productservice";
 
 function CatalogContent() {
   const searchParams = useSearchParams()
@@ -37,16 +37,24 @@ function CatalogContent() {
     try {
       const params: any = {}
 
-       if (searchParams.get("search")) params.search = searchParams.get("search")!
-      // if (searchParams.get("category")) params.category = searchParams.get("category")!
-      // if (filters.minPrice) params.minPrice = filters.minPrice
-      // if (filters.maxPrice) params.maxPrice = filters.maxPrice
-      // if (filters.brands.length > 0) params.brand = filters.brands[0] // API might not support multiple brands
-      // if (filters.categories.length > 0) params.category = filters.categories[0] // API might not support multiple categories
+      //  if (searchParams.get("search")) params.search = searchParams.get("search")!
+      //  if (searchParams.get("category")) params.category = searchParams.get("category")!
+      //  if (filters.minPrice) params.price_from = parseFloat(filters.minPrice)
+      //  if (filters.maxPrice) params.price_to = parseFloat(filters.maxPrice)
 
-      const data = await apiClient.getProducts() as ProductsResponse
+      //  if (filters.brands.length > 0) 
+      //   {
+      //       params.manufacturer_id = filters.brands.map(brand => parseInt(brand))
+      //   }
 
-     setProducts(Array.isArray(data.products) ? data.products : [])
+      //  if (filters.categories.length > 0)
+      //   {
+      //       params.category_id = filters.categories.map(category => parseInt(category))
+      //   }
+    
+      const products = await getProducts();
+      console.log("Fetched products:", products)
+     setProducts(Array.isArray(products) ? products : [])
     } catch (error) {
       console.error("Failed to fetch products:", error)
       setError("Failed to load products. Please try again.")
@@ -71,14 +79,12 @@ function CatalogContent() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-slate-800 mb-4">Product Catalog</h1>
-
         {/* Search and Filter Controls */}
         <div className="flex flex-col md:flex-row gap-4 mb-6">
           <form onSubmit={handleSearch} className="flex-1 flex gap-2">
             <Input
               type="text"
-              placeholder="Search products..."
+              placeholder="Търси продукти..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="flex-1"
@@ -117,7 +123,7 @@ function CatalogContent() {
           ) : products.length > 0 ? (
             <>
               <div className="flex justify-between items-center mb-6">
-                <p className="text-slate-600">{products.length} products found</p>
+                <p className="text-slate-600">{products.length} намерени продукти</p>
               </div>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {products.map((product: any) => (
@@ -147,7 +153,7 @@ function CatalogContent() {
 
 export default function CatalogPage() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div>Зареждане...</div>}>
       <CatalogContent />
     </Suspense>
   )

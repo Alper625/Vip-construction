@@ -4,73 +4,11 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { ProductCard } from "./components/product-card"
 import { ArrowRight, Shield, Truck, Clock } from "lucide-react"
-import { apiClient } from "@/lib/api-client"
-import {Product, ProductsResponse} from "@/types/Product"
-
-async function getFeaturedProducts() {
-  try {
-    const products = await apiClient.getProducts() as  ProductsResponse
-
-    return Array.isArray(products?.products) ? products.products.slice(0, 4) : []
-  } catch (error) {
-    console.error("Failed to fetch featured products:", error)
-    // Fallback to mock data
-    return [
-      {
-        id: "1",
-        name: "DeWalt 20V MAX Cordless Drill",
-        price: 129.99,
-        image: "/placeholder.svg?height=300&width=300",
-        description: "High-performance cordless drill with 20V MAX battery",
-        category: "power-tools",
-        brand: "DeWalt",
-        stock: 15,
-        featured: true,
-      },
-      {
-        id: "2",
-        name: "Milwaukee M18 Circular Saw",
-        price: 199.99,
-        image: "/placeholder.svg?height=300&width=300",
-        description: '7-1/4" circular saw with brushless motor',
-        category: "power-tools",
-        brand: "Milwaukee",
-        stock: 8,
-        featured: true,
-      },
-    ]
-  }
-}
-
-async function getCategories() {
-  try {
-    const categories = await apiClient.getCategories()
-
-    return Array.isArray(categories) ? categories : []
-  } catch (error) {
-    console.error("Failed to fetch categories:", error)
-    // Fallback to mock data
-    return [
-      {
-        id: "power-tools",
-        name: "Power Tools",
-        description: "Electric and battery-powered tools for construction",
-        image: "/placeholder.svg?height=200&width=200",
-        productCount: 45,
-      },
-      {
-        id: "hand-tools",
-        name: "Hand Tools",
-        description: "Manual tools for precision work",
-        image: "/placeholder.svg?height=200&width=200",
-        productCount: 78,
-      },
-    ]
-  }
-}
+import { getCategories } from "@/services/categoryservice";
+import { getFeaturedProducts } from "@/services/productservice";
 
 export default async function HomePage() {
-  const [featuredProducts, categories] = await Promise.all([getFeaturedProducts(), getCategories()])
+  const [featuredProducts = [], categories = []] = await Promise.all([getFeaturedProducts(), getCategories()])
  
   return (
     <div>
@@ -92,15 +30,14 @@ export default async function HomePage() {
                 </Link>
               </div>
             </div>
-            <div className="relative">
+            <div className="relative w-full h-0 pb-[66.67%] ml-10">
               <Image
-                src="/placeholder.svg?height=400&width=600"
+                src="/HomePagePic.png"
                 alt="Construction tools"
-                width={600}
-                height={400}
-                className="rounded-lg shadow-2xl"
+                fill
+                className="rounded-lg shadow-2xl object-cover"
               />
-            </div>
+          </div>
           </div>
         </div>
       </section>
@@ -148,7 +85,7 @@ export default async function HomePage() {
               <div className="text-center">
                 <Link href="/catalog">
                   <Button size="lg" className="btn-primary">
-                    View All Products
+                    Виж всички продукти
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>

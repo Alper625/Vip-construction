@@ -64,6 +64,10 @@ class ApiClient {
     return this.request(`/products/${id}`)
   }
 
+  async getManufacturer() {
+    return this.request(`/manufacturers`)
+  }
+
   async addToCart(productId: string, quantity: number) {
     return this.request("/cart", {
       method: "POST",

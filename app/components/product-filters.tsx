@@ -6,6 +6,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { getCategories } from "@/services/categoryservice";
+import { getManufacturer } from "@/services/categoryservice";
 
 interface FilterProps {
   onFiltersChange: (filters: any) => void
@@ -15,14 +17,36 @@ export function ProductFilters({ onFiltersChange }: FilterProps) {
   const [priceRange, setPriceRange] = useState({ min: "", max: "" })
   const [selectedBrands, setSelectedBrands] = useState<string[]>([])
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
+  const [categories, setCategories] = useState<{ id: string; name: string }[]>([])
+  const [brands, setBrands] = useState<{ id: string; name: string }[]>([])
 
-  const brands = ["DeWalt", "Milwaukee", "Makita", "Stanley", "Klein", "Rigid"]
-  const categories = [
-    { id: "power-tools", name: "Power Tools" },
-    { id: "hand-tools", name: "Hand Tools" },
-    { id: "safety", name: "Safety Equipment" },
-    { id: "hardware", name: "Hardware" },
-  ]
+  useEffect(() => {
+    async function fetchManufacturers() {
+      const fetchedManufacturers =  await getManufacturer()
+   
+      setBrands(
+        fetchedManufacturers.map((manufacturer) => ({
+          id: manufacturer.id.toString(),
+          name: manufacturer.name,
+        }))
+      )
+    }
+    fetchManufacturers()
+  }, [])
+
+  useEffect(() => {
+    async function fetchCategories() {
+      const fetchedCategories = await getCategories()
+
+      setCategories(
+        fetchedCategories.map((category) => ({
+          id: category.id.toString(),
+          name: category.name,
+        }))
+      )
+    }
+    fetchCategories()
+  }, [])
 
   useEffect(() => {
     onFiltersChange({
@@ -56,41 +80,38 @@ export function ProductFilters({ onFiltersChange }: FilterProps) {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="">
       <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">Filters</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6">
+
+        <CardContent className="space-y-6 p-4">
           {/* Price Range */}
           <div>
-            <Label className="text-sm font-medium mb-3 block">Price Range</Label>
+            <Label className="text-sm font-medium mb-3 block">Цена</Label>
             <div className="flex space-x-2">
               <Input
                 type="number"
-                placeholder="Min"
+                placeholder="От"
                 value={priceRange.min}
                 onChange={(e) => setPriceRange({ ...priceRange, min: e.target.value })}
               />
               <Input
                 type="number"
-                placeholder="Max"
+                placeholder="До"
                 value={priceRange.max}
                 onChange={(e) => setPriceRange({ ...priceRange, max: e.target.value })}
               />
             </div>
           </div>
-
-          {/* Categories */}
           <div>
-            <Label className="text-sm font-medium mb-3 block">Categories</Label>
+            
+            <Label className="text-sm font-medium mb-3 block">Категории</Label>
             <div className="space-y-2">
               {categories.map((category) => (
                 <div key={category.id} className="flex items-center space-x-2">
                   <Checkbox
                     id={category.id}
                     checked={selectedCategories.includes(category.id)}
-                    onCheckedChange={(checked) => handleCategoryChange(category.id, checked as boolean)}
+                    onCheckedChange={(checked: boolean) => handleCategoryChange(category.id, checked)}
                   />
                   <Label htmlFor={category.id} className="text-sm">
                     {category.name}
@@ -102,17 +123,17 @@ export function ProductFilters({ onFiltersChange }: FilterProps) {
 
           {/* Brands */}
           <div>
-            <Label className="text-sm font-medium mb-3 block">Brands</Label>
+            <Label className="text-sm font-medium mb-3 block">Производител</Label>
             <div className="space-y-2">
               {brands.map((brand) => (
-                <div key={brand} className="flex items-center space-x-2">
+                <div key={brand.id} className="flex items-center space-x-2">
                   <Checkbox
-                    id={brand}
-                    checked={selectedBrands.includes(brand)}
-                    onCheckedChange={(checked) => handleBrandChange(brand, checked as boolean)}
+                  id={brand.id}
+                    checked={selectedBrands.includes(brand.id)}
+                    onCheckedChange={(checked: boolean) => handleBrandChange(brand.id, checked as boolean)}
                   />
-                  <Label htmlFor={brand} className="text-sm">
-                    {brand}
+                  <Label htmlFor={brand.id} className="text-sm">
+                    {brand.name}
                   </Label>
                 </div>
               ))}
@@ -120,7 +141,7 @@ export function ProductFilters({ onFiltersChange }: FilterProps) {
           </div>
 
           <Button onClick={clearFilters} variant="outline" className="w-full">
-            Clear All Filters
+            Изчисти филтрите
           </Button>
         </CardContent>
       </Card>

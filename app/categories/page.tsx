@@ -2,23 +2,10 @@ import Image from "next/image"
 import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
 import { ArrowRight } from "lucide-react"
-import { apiClient } from "@/lib/api-client"
-import { Category, CategoriesResponse } from "@/types/Category"
-
-async function getCategories(): Promise<Category[]> {
-  try {
-    
-    const response = await apiClient.getCategories() as CategoriesResponse
-
-    return Array.isArray(response?.categories) ? response.categories : []
-  } catch (error) {
-    console.error("Failed to fetch categories:", error)
-    return []
-  }
-}
+import { getCategories } from "@/services/categoryservice";
 
 export default async function CategoriesPage() {
-  const categories = await getCategories()
+  const categories = await getCategories();
 
   return (
     <div className="container mx-auto px-4 py-8">
